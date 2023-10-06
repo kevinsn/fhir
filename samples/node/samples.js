@@ -2,13 +2,13 @@ const axios = require('axios');
 
 // Step 1 - Define the constant values.
 const aadTenant = 'https://login.microsoftonline.com/';
-const aadTenantId = '2e9fb99a-c00d-421f-a9b8-38a3e34e7eb8';
+const aadTenantId = '55a0e59d-a1dc-4195-a40d-f1c1345109a5';
 
-const appId = '0766dcb9-dc09-41c3-9715-c56766311932';
-const appSecret = 'XBM8Q~_imeXhFi3OwzZUJ~Yas8ANuqSbD~BJkaZS';
+const appId = 'b0f98847-37e3-43c9-bd3e-c3fe70653563';
+const appSecret = '4VJ8Q~RXNkPbh5R0yDqZJHfukO56iGIoVBo7mc3h';
 
 const fhirEndpoint =
-  'https://demofhirbrznodejs-fhirservice.fhir.azurehealthcareapis.com/';
+  'https://demofhirbr-fhirservice.fhir.azurehealthcareapis.com/';
 
 ///////////////////////////////////////////////////////////
 
@@ -311,6 +311,20 @@ async function printAllAppointmentsAssignedToPatient(patientId, accessToken) {
   }
 }
 
+async function getMedication(accessToken) {
+  const baseUrl = fhirEndpoint + 'Medication';
+
+  try {
+    const response = await axios.get(baseUrl, {
+      headers: getHttpHeader(accessToken),
+    });
+
+    return response?.data;
+  } catch (error) {
+    console.log('\tError getting medication data: ' + error.response.status);
+  }
+}
+
 ///////////////////////////////////////////////////////////
 
 const seed = async () => {
@@ -385,4 +399,5 @@ module.exports = {
   printAllAppointmentsAssignedToPatient,
   getAuthToken,
   getPatients,
+  getMedication,
 };

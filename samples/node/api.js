@@ -5,6 +5,7 @@ const {
   postPatient,
   printPatientInfo,
   getPatients,
+  getMedication,
 } = require('./samples');
 
 const app = express();
@@ -37,6 +38,13 @@ app.post('/patients', async (req, res) => {
   const patientId = await postPatient(accessToken, req.body);
 
   res.json({ patientId });
+});
+
+app.get('/medication', async (req, res) => {
+  const accessToken = await getAuthToken();
+  const data = await getMedication(accessToken);
+
+  res.json(data?.entry || []);
 });
 
 // Iniciar o servidor
